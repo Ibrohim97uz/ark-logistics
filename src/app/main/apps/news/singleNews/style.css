@@ -1,0 +1,12 @@
+.default-image-wrapper {
+	height: 450px;
+	width: 500px;
+}
+
+.default-image {
+	height: 100%;
+	width: 100%;
+}
+.label {
+	cursor: pointer;
+}
