@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getToken = () => {
-	return localStorage.getItem('jwt_access_token');
+	return window.localStorage.getItem('jwt_access_token');
 };
 
 const MainRequest = axios.create({
