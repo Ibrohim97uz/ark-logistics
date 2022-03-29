@@ -2,8 +2,10 @@ import { Button } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Head = ({ alertOpen, setAlertOpen, addNewOpen, setAddNewOpen }) => {
+	const { t } = useTranslation();
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">
 			<div className="flex flex-col w-full sm:w-auto">
@@ -30,7 +32,7 @@ const Head = ({ alertOpen, setAlertOpen, addNewOpen, setAddNewOpen }) => {
 						color="secondary"
 						onClick={() => setAddNewOpen(true)}
 					>
-						<span className="hidden sm:flex">Add new</span>
+						{t('Add new')}
 					</Button>
 				</motion.div>
 			)}

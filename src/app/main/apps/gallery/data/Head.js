@@ -32,7 +32,7 @@ const Head = ({ alertOpen, setAlertOpen, addNewOpen, setAddNewOpen }) => {
 						color="secondary"
 						onClick={() => setAddNewOpen(true)}
 					>
-						<span className="hidden sm:flex">{t('Add new')}</span>
+						{t('Add new')}
 					</Button>
 				</motion.div>
 			)}
