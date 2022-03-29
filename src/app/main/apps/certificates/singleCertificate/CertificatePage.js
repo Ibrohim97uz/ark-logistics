@@ -1,4 +1,5 @@
 import FuseLoading from '@fuse/core/FuseLoading';
+import FusePageCarded from '@fuse/core/FusePageCarded';
 import { createMuiTheme, Card, AppBar, Typography, makeStyles, Toolbar } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -9,7 +10,6 @@ import './style.css';
 import CertificateInformation from './CertificateInformation';
 import EditCertificate from './EditCertificate';
 
-import FusePageCarded from '@fuse/core/FusePageCarded';
 import Head from './Head';
 
 const theme = createMuiTheme({

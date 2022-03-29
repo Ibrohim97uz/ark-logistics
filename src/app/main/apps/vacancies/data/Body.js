@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import Alert from './table/Alert';
 import TableBody from './table/TableBody';
 import TableHead from './table/TableHead';
-import AddNewStaff from './table/AddNewStaff';
+import AddNewVacancy from './table/AddNewVacancy';
 
 const Body = ({ props, addNewOpen, setAddNewOpen }) => {
 	const { isLoading, isError, refetch, data } = GetAllVacancies();
@@ -74,7 +74,7 @@ const Body = ({ props, addNewOpen, setAddNewOpen }) => {
 		<div className="w-full flex flex-col">
 			<FuseScrollbars className="flex-grow overflow-x-auto">
 				{addNewOpen ? (
-					<AddNewStaff handleFetch={handleFetch} setAddNewOpen={setAddNewOpen} />
+					<AddNewVacancy handleFetch={handleFetch} setAddNewOpen={setAddNewOpen} />
 				) : (
 					<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
 						<TableHead />

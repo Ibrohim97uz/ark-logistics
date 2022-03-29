@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Add } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { CreateService } from 'hooks';
@@ -7,12 +7,16 @@ import { Typography, CardContent, Button, TextField, Switch } from '@material-ui
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 import '../../singleService/style.css';
-import image from '../../data/image/gallery.png';
+import image from '../image/gallery.png';
 
 export default function AddNewService({ handleFetch, setAddNewOpen }) {
 	const { t } = useTranslation();
+	const previewTemp = useRef();
+	const dispatch = useDispatch();
 
 	const createService = CreateService();
 
@@ -35,7 +39,7 @@ export default function AddNewService({ handleFetch, setAddNewOpen }) {
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [previews, setPreviews] = useState([]);
 
-	useEffect(() => {
+	const previewFunc = () => {
 		if (!selectedFiles.length) {
 			return;
 		}
@@ -53,6 +57,12 @@ export default function AddNewService({ handleFetch, setAddNewOpen }) {
 			setPreviews([...previews, { file: objectUrl, type: 'video' }]);
 		}
 		() => URL.revokeObjectURL(objectUrl);
+	};
+
+	previewTemp.current = previewFunc;
+
+	useEffect(() => {
+		previewTemp.current();
 	}, [selectedFiles]);
 
 	const handleChange = e => {
@@ -85,7 +95,7 @@ export default function AddNewService({ handleFetch, setAddNewOpen }) {
 				handleFetch();
 				setAddNewOpen(false);
 			})
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	return (
@@ -103,23 +113,27 @@ export default function AddNewService({ handleFetch, setAddNewOpen }) {
 								<ImageListItem key={n}>
 									{preview.file ? (
 										preview.type === 'image' ? (
-											<img key={n} loading="lazy" src={preview.file} />
+											<img alt="img" key={n} loading="lazy" src={preview.file} />
 										) : (
-											<video key={n} loading="lazy" controls src={preview.file} />
+											<video key={n} controls loading="lazy" className="gallery-image">
+												<source src={preview.file} />
+												<track kind="captions" srcLang="en" label="english_captions" />
+											</video>
 										)
 									) : (
-										<img key={n} src={image} />
+										<img alt="img" key={n} src={image} />
 									)}
 								</ImageListItem>
 							))}
 						</ImageList>
 					) : (
 						<div className="default-image-wrapper">
-							<img className="default-image" src={image} />
+							<img alt="img" className="default-image" src={image} />
 						</div>
 					)}
 
 					<div className="flex flex-column justify-center mt-12">
+						{/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
 						<label className="label" htmlFor="file">
 							<Add />
 						</label>

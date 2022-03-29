@@ -1,4 +1,4 @@
-import authRoles from 'app/auth/authRoles.js';
+import authRoles from 'app/auth/authRoles';
 import { lazy } from 'react';
 
 const CertificatesAppConfig = {

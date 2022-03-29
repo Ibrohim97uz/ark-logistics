@@ -3,11 +3,14 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { Typography, CardContent, TextField, Switch, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { PatchVacancy } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 import './style.css';
 
 export default function EditVacancy({ data, isLoading, handleEditInformation }) {
 	const patchVacancy = PatchVacancy(data._id);
+	const dispatch = useDispatch();
 
 	const { t } = useTranslation();
 
@@ -34,7 +37,7 @@ export default function EditVacancy({ data, isLoading, handleEditInformation }) 
 		patchVacancy
 			.mutateAsync(inputDatas)
 			.then(res => handleEditInformation())
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	if (isLoading) {

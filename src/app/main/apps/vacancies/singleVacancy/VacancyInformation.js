@@ -20,7 +20,7 @@ const VacancyInformation = ({ data }) => {
 			<div className="mb-24">
 				<Typography className="font-semibold mb-4 text-15">{t('Is Active')}</Typography>
 
-				<span className={data.isActive ? `is-active active` : `is-active not-active`}></span>
+				<span className={data.isActive ? `is-active active` : `is-active not-active`} />
 			</div>
 		</CardContent>
 	);

@@ -4,11 +4,14 @@ import { Typography, Toolbar, Card, CardContent, AppBar, TextField, Switch, Butt
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { PatchStaff } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 import './style.css';
 
 export default function EditInformation({ data, isLoading, handleEditInformation }) {
 	const patchStaff = PatchStaff(data._id);
+	const dispatch = useDispatch();
 
 	const { t } = useTranslation();
 	const locale = localStorage.getItem('locale');
@@ -82,7 +85,7 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 		patchStaff
 			.mutateAsync(CreatedData)
 			.then(res => handleEditInformation())
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	if (isLoading) {

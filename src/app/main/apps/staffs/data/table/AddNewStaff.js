@@ -4,12 +4,16 @@ import { Typography, Toolbar, Card, CardContent, AppBar, TextField, Switch, Butt
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CreateStaff } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 import '../../singleStaff/style.css';
 
 export default function AddNewStaff({ data, isLoading, handleFetch, setAddNewOpen }) {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const createStaff = CreateStaff();
+	const dispatch = useDispatch();
+
 	const { t } = useTranslation();
 	const item = {
 		hidden: { opacity: 0, y: 40 },
@@ -88,7 +92,7 @@ export default function AddNewStaff({ data, isLoading, handleFetch, setAddNewOpe
 				handleFetch();
 				setAddNewOpen(false);
 			})
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	if (isLoading) {

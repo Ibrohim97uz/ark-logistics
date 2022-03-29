@@ -43,7 +43,7 @@ export default function Body({ data, goToSinglePage, setAlertOpen, setId }) {
 							scope="row"
 						>
 							<div className="text-center">
-								<span className={vacancy.isActive ? `is-active active` : `is-active not-active`}></span>
+								<span className={vacancy.isActive ? `is-active active` : `is-active not-active`} />
 							</div>
 						</TableCell>
 

@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Add } from '@material-ui/icons';
 import { Typography, CardContent, Avatar, IconButton, Button, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
+
 import { CreateGallery } from 'hooks';
+import image from '../image/gallery.png';
 import '../../singleGallery/style.css';
-import image from '../../data/image/gallery.png';
 
 export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen }) {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
+	const previewTemp = useRef();
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -26,13 +31,13 @@ export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen })
 	const [selectedFile, setSelectedFile] = useState();
 	const [preview, setPreview] = useState({});
 
-	useEffect(() => {
-		if (!selectedFile) {
+	const handlePreview = () => {
+		if (!selectedFile?.file) {
 			!preview?.file && setPreview({});
 			return;
 		}
 
-		const objectUrl = URL.createObjectURL(selectedFile.file);
+		const objectUrl = URL.createObjectURL(selectedFile?.file);
 
 		if (
 			selectedFile.type === 'image/gif' ||
@@ -46,6 +51,12 @@ export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen })
 		}
 
 		() => URL.revokeObjectURL(objectUrl);
+	};
+
+	previewTemp.current = handlePreview;
+
+	useEffect(() => {
+		previewTemp.current();
 	}, [selectedFile]);
 
 	const onSelectFile = e => {
@@ -83,7 +94,7 @@ export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen })
 				handleFetch();
 				setAddNewOpen(false);
 			})
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	return (
@@ -100,7 +111,10 @@ export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen })
 							preview.type === 'image' ? (
 								<Avatar className="gallery-image" src={preview.file} />
 							) : (
-								<video className="gallery-image" controls src={preview.file} />
+								<video controls className="gallery-image">
+									<source src={preview.file} />
+									<track kind="captions" srcLang="en" label="english_captions" />
+								</video>
 							)
 						) : (
 							<Avatar className="gallery-image" src={image} />
@@ -108,6 +122,7 @@ export default function AddNewGallery({ isLoading, handleFetch, setAddNewOpen })
 					</div>
 
 					<div className="flex flex-column justify-center mt-12">
+						{/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
 						<label className="label" htmlFor="file">
 							<Add />
 						</label>

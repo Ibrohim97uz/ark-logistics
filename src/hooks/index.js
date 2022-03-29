@@ -41,7 +41,7 @@ export const GetAllStaffs = () => {
 	return useQuery(route + routes.staffs);
 };
 export const GetStaffById = id => {
-	return useQuery(route + routes.staffs + '/' + id);
+	return useQuery(`${route + routes.staffs}/${id}`);
 };
 
 export const PatchStaff = (id, formData) => {
@@ -83,7 +83,7 @@ export const PatchVacancy = id => {
 };
 
 export const GetVacancyById = id => {
-	return useQuery(route + routes.vacancies + '/' + id);
+	return useQuery(`${route + routes.vacancies}/${id}`);
 };
 
 // GALLERY
@@ -92,7 +92,7 @@ export const GetAllGalleries = () => {
 	return useQuery(route + routes.gallery);
 };
 export const GetGalleryById = id => {
-	return useQuery(route + routes.gallery + '/' + id);
+	return useQuery(`${route + routes.gallery}/${id}`);
 };
 
 export const PatchGallery = id => {
@@ -111,7 +111,7 @@ export const GetAllServices = () => {
 	return useQuery(route + routes.services);
 };
 export const GetServiceById = id => {
-	return useQuery(route + routes.services + '/' + id);
+	return useQuery(`${route + routes.services}/${id}`);
 };
 
 export const CreateService = () => {
@@ -126,7 +126,7 @@ export const GetAllNews = () => {
 	return useQuery(route + routes.news);
 };
 export const GetNewsById = id => {
-	return useQuery(route + routes.news + '/' + id);
+	return useQuery(`${route + routes.news}/${id}`);
 };
 
 export const CreateNews = () => {
@@ -142,7 +142,7 @@ export const GetAllCertificates = () => {
 	return useQuery(route + routes.certificates);
 };
 export const GetCertificateById = id => {
-	return useQuery(route + routes.certificates + '/' + id);
+	return useQuery(`${route + routes.certificates}/${id}`);
 };
 
 export const CreateCertificate = () => {

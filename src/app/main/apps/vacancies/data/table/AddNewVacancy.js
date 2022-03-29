@@ -4,12 +4,16 @@ import { Typography, Toolbar, Card, CardContent, AppBar, TextField, Switch, Butt
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CreateVacancy } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 import '../../singleVacancy/style.css';
 
-export default function AddNewStaff({ isLoading, handleFetch, setAddNewOpen }) {
+export default function AddNewVacancy({ isLoading, handleFetch, setAddNewOpen }) {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const createVacancy = CreateVacancy();
+	const dispatch = useDispatch();
+
 	const { t } = useTranslation();
 	const item = {
 		hidden: { opacity: 0, y: 40 },
@@ -39,7 +43,7 @@ export default function AddNewStaff({ isLoading, handleFetch, setAddNewOpen }) {
 				handleFetch();
 				setAddNewOpen(false);
 			})
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	if (isLoading) {

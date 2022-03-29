@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Add } from '@material-ui/icons';
 import { Typography, CardContent, Avatar, IconButton, Button, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { PatchGallery } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
+
 import './style.css';
 import image from '../data/image/gallery.png';
 
 const VacancyInformation = ({ data, handleEditInformation }) => {
 	const { t } = useTranslation();
+	const previewTemp = useRef();
+	const dispatch = useDispatch();
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -26,7 +31,7 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 	const [selectedFile, setSelectedFile] = useState();
 	const [preview, setPreview] = useState({});
 
-	useEffect(() => {
+	const previewFunc = () => {
 		if (!selectedFile) {
 			!preview?.file && setPreview({});
 			return;
@@ -46,6 +51,12 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 		}
 
 		() => URL.revokeObjectURL(objectUrl);
+	};
+
+	previewTemp.current = previewFunc;
+
+	useEffect(() => {
+		previewTemp.current();
 	}, [selectedFile]);
 
 	const onSelectFile = e => {
@@ -80,7 +91,7 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 		patchGallery
 			.mutateAsync(CreatedData)
 			.then(res => handleEditInformation())
-			.catch(err => alert(err.message));
+			.catch(err => dispatch(showMessage({ message: err.message })));
 	};
 
 	return (
@@ -97,18 +108,25 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 							preview.type === 'image' ? (
 								<Avatar className="gallery-image" src={preview.file} />
 							) : (
-								<video className="gallery-image" controls src={preview.file} />
+								<video className="gallery-image">
+									<source controls src={preview.file} />
+									<track kind="captions" srcLang="en" label="english_captions" />
+								</video>
 							)
 						) : data?.image ? (
 							<Avatar className="gallery-image" src={serverUrl + data?.image} />
 						) : data?.video ? (
-							<video className="gallery-image" src={serverUrl + data.video} controls />
+							<video controls className="gallery-image">
+								<source src={serverUrl + data.video} />
+								<track kind="captions" srcLang="en" label="english_captions" />
+							</video>
 						) : (
 							<Avatar className="gallery-image" src={image} />
 						)}
 					</div>
 
 					<div className="flex flex-column justify-center mt-12">
+						{/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
 						<label className="label" htmlFor="file">
 							<Add />
 						</label>

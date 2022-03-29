@@ -13,10 +13,14 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CreateCertificate } from 'hooks';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
+
 import '../../singleCertificate/style.css';
 
 const AddNewCertificate = ({ handleFetch, setAddNewOpen }) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 
 	const createCertificate = CreateCertificate();
 
@@ -34,23 +38,7 @@ const AddNewCertificate = ({ handleFetch, setAddNewOpen }) => {
 		type: 'firm'
 	};
 
-	const [age, setAge] = useState(1);
-
-	const handleChange = e => {
-		e.preventDefault();
-		setAge(e.target.value);
-	};
-
 	const [inputDatas, setInputDatas] = useState(defaultValues);
-
-	useEffect(() => {
-		if (age === 1) {
-			setInputDatas({ ...inputDatas, type: 'firm' });
-		} else {
-			setInputDatas({ ...inputDatas, type: 'staff' });
-		}
-		console.log(inputDatas.type);
-	}, [age]);
 
 	const [selectedFile, setSelectedFile] = useState();
 	const [preview, setPreview] = useState();
@@ -98,7 +86,19 @@ const AddNewCertificate = ({ handleFetch, setAddNewOpen }) => {
 				handleFetch();
 				setAddNewOpen();
 			})
-			.catch(err => alert(err.message));
+			.catch(err => {
+				dispatch(showMessage({ message: err.message }));
+			});
+	};
+
+	const handleChange = e => {
+		e.preventDefault();
+
+		if (e.target.value === 1) {
+			setInputDatas({ ...inputDatas, type: 'firm' });
+		} else {
+			setInputDatas({ ...inputDatas, type: 'staff' });
+		}
 	};
 
 	return (
@@ -115,6 +115,7 @@ const AddNewCertificate = ({ handleFetch, setAddNewOpen }) => {
 					</div>
 
 					<div className="flex flex-column justify-center mt-12">
+						{/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
 						<label className="label" htmlFor="file">
 							<Add />
 						</label>
@@ -257,14 +258,14 @@ const AddNewCertificate = ({ handleFetch, setAddNewOpen }) => {
 						<Select
 							labelId="type"
 							id="type-select"
-							value={age}
+							value={inputDatas.type === 'staff' ? 2 : 1}
 							onChange={e => {
 								e.preventDefault();
 								handleChange(e);
 							}}
 						>
-							<MenuItem value={1}>{t('Firm')}</MenuItem>
-							<MenuItem value={2}>{t('Staff')}</MenuItem>
+							<MenuItem value={1}>{t('firm')}</MenuItem>
+							<MenuItem value={2}>{t('staff')}</MenuItem>
 						</Select>
 					</FormControl>
 				</div>

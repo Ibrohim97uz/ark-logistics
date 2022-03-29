@@ -1,4 +1,5 @@
 import FuseLoading from '@fuse/core/FuseLoading';
+import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Card, AppBar, Typography, Toolbar } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -8,7 +9,6 @@ import { GetNewsById } from 'hooks';
 import './style.css';
 import NewsInformation from './NewsInformation';
 
-import FusePageCarded from '@fuse/core/FusePageCarded';
 import Head from './Head';
 
 function Service(props) {

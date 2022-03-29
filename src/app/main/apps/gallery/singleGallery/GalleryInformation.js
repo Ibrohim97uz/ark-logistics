@@ -15,7 +15,10 @@ const VacancyInformation = ({ data }) => {
 					{data?.image ? (
 						<Avatar className="gallery-image" src={serverUrl + data?.image} />
 					) : data?.video ? (
-						<video className="gallery-image" src={serverUrl + data.video} controls />
+						<video className="gallery-image">
+							<source controls src={serverUrl + data.video} />
+							<track kind="captions" srcLang="en" label="english_captions" />
+						</video>
 					) : (
 						<Avatar className="gallery-image" src={gallery} />
 					)}
