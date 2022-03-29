@@ -25,7 +25,7 @@ export default function Body({ data, goToSinglePage, setAlertOpen, setId }) {
 							component="th"
 							scope="row"
 						>
-							{news?.image?.length && <Avatar src={serverUrl + news?.image[0]?.src} />}
+							{news?.images?.length && <Avatar src={serverUrl + news?.images[0]?.src} />}
 						</TableCell>
 
 						<TableCell
