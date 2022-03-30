@@ -24,6 +24,14 @@ const UserInformation = ({ data }) => {
 
 				<CardContent>
 					<div className="mb-24">
+						<Typography className="font-semibold mb-4 text-15">{t('Telephone')}</Typography>
+						<Typography>
+							<Typography className="font-semibold mb-4 text-15">{t('Position')}</Typography>
+							<Typography>{data?.position[locale]}</Typography>
+						</Typography>
+					</div>
+
+					<div className="mb-24">
 						<Typography>{data?.definition[locale]}</Typography>
 					</div>
 				</CardContent>

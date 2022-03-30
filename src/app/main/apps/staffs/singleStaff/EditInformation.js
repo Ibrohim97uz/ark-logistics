@@ -14,7 +14,7 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 	const dispatch = useDispatch();
 
 	const { t } = useTranslation();
-	const locale = localStorage.getItem('locale');
+	const locale = window.localStorage.getItem('locale');
 	const item = {
 		hidden: { opacity: 0, y: 40 },
 		show: { opacity: 1, y: 0 }
@@ -22,7 +22,11 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 	const defaultValues = {
-		definition: data?.definition[locale],
+		definition: {
+			uz: data?.definition.uz,
+			ru: data?.definition.ru,
+			en: data?.definition.en
+		},
 		streetAddress: data?.streetAddress,
 		region: data?.region,
 		district: data?.district,
@@ -33,7 +37,11 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 		name: data?.name,
 		surname: data?.surname,
 		fathersName: data?.fathersName,
-		position: data?.position
+		position: {
+			uz: data?.position.uz,
+			ru: data?.position.ru,
+			en: data?.position.en
+		}
 	};
 
 	const [inputDatas, setInputDatas] = useState(defaultValues);
@@ -74,11 +82,7 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 	const handleSubmit = (e, file, formDataCreator) => {
 		e.preventDefault();
 		const obj = {
-			...inputDatas,
-			definition: {
-				...data.definition,
-				[locale]: inputDatas.definition
-			}
+			...inputDatas
 		};
 		const CreatedData = formDataCreator(obj, file);
 
@@ -181,18 +185,62 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 								variant="outlined"
 							/>
 						</div>
+
 						<div className="mb-24">
-							<Typography className="font-semibold mb-16 text-15">{t('Position')}</Typography>
+							<Typography className="font-semibold mb-16 text-15">{t('Position EN')}</Typography>
 							<TextField
 								fullWidth
 								id="outlined-multiline-static"
-								label={t('Position')}
+								label={t('Position EN')}
 								multiline
-								value={inputDatas.position}
+								value={inputDatas.position.en}
 								onChange={e =>
 									setInputDatas({
 										...inputDatas,
-										position: e.target.value
+										position: {
+											...inputDatas.position,
+											en: e.target.value
+										}
+									})
+								}
+								variant="outlined"
+							/>
+						</div>
+						<div className="mb-24">
+							<Typography className="font-semibold mb-16 text-15">{t('Position UZ')}</Typography>
+							<TextField
+								fullWidth
+								id="outlined-multiline-static"
+								label={t('Position UZ')}
+								multiline
+								value={inputDatas.position.uz}
+								onChange={e =>
+									setInputDatas({
+										...inputDatas,
+										position: {
+											...inputDatas.position,
+											uz: e.target.value
+										}
+									})
+								}
+								variant="outlined"
+							/>
+						</div>
+						<div className="mb-24">
+							<Typography className="font-semibold mb-16 text-15">{t('Position RU')}</Typography>
+							<TextField
+								fullWidth
+								id="outlined-multiline-static"
+								label={t('Position RU')}
+								multiline
+								value={inputDatas.position.ru}
+								onChange={e =>
+									setInputDatas({
+										...inputDatas,
+										position: {
+											...inputDatas.position,
+											ru: e.target.value
+										}
 									})
 								}
 								variant="outlined"
@@ -200,17 +248,60 @@ export default function EditInformation({ data, isLoading, handleEditInformation
 						</div>
 
 						<div className="mb-24">
-							<Typography className="font-semibold mb-16 text-15">{t('About')}</Typography>
+							<Typography className="font-semibold mb-16 text-15">{t('About EN')}</Typography>
 							<TextField
 								fullWidth
 								id="outlined-multiline-static"
-								label={t('About')}
+								label={t('About EN')}
 								multiline
-								value={inputDatas.definition}
+								value={inputDatas.definition.en}
 								onChange={e =>
 									setInputDatas({
 										...inputDatas,
-										definition: e.target.value
+										definition: {
+											...inputDatas.definition,
+											en: e.target.value
+										}
+									})
+								}
+								variant="outlined"
+							/>
+						</div>
+						<div className="mb-24">
+							<Typography className="font-semibold mb-16 text-15">{t('About UZ')}</Typography>
+							<TextField
+								fullWidth
+								id="outlined-multiline-static"
+								label={t('About UZ')}
+								multiline
+								value={inputDatas.definition.uz}
+								onChange={e =>
+									setInputDatas({
+										...inputDatas,
+										definition: {
+											...inputDatas.definition,
+											uz: e.target.value
+										}
+									})
+								}
+								variant="outlined"
+							/>
+						</div>
+						<div className="mb-24">
+							<Typography className="font-semibold mb-16 text-15">{t('About RU')}</Typography>
+							<TextField
+								fullWidth
+								id="outlined-multiline-static"
+								label={t('About RU')}
+								multiline
+								value={inputDatas.definition.ru}
+								onChange={e =>
+									setInputDatas({
+										...inputDatas,
+										definition: {
+											...inputDatas.definition,
+											ru: e.target.value
+										}
 									})
 								}
 								variant="outlined"

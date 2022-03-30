@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 export default function Body({ data, setAlertOpen, setId }) {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { t } = useTranslation();
+	const locale = window.localStorage.getItem('locale') || 'en';
 	return (
 		<TableBody>
 			{data?.map((resume, n) => {
@@ -27,7 +28,7 @@ export default function Body({ data, setAlertOpen, setId }) {
 						</TableCell>
 
 						<TableCell className="p-4 md:p-16" component="th" scope="row">
-							{resume.vacancy}
+							{resume.vacancy[locale]}
 						</TableCell>
 
 						<TableCell className="p-4 md:p-16" component="th" scope="row">
