@@ -1,9 +1,11 @@
 import { TableBody, TableCell, TableRow, IconButton } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { Delete } from '@material-ui/icons';
 import '../vacancyStyle.css';
 
 export default function Body({ data, goToSinglePage, setAlertOpen, setId }) {
 	const locale = localStorage.getItem('locale');
+	const { t } = useTranslation();
 
 	return (
 		<TableBody>

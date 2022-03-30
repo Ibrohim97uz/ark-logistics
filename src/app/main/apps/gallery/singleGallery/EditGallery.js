@@ -32,7 +32,7 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 	const [preview, setPreview] = useState({});
 
 	const previewFunc = () => {
-		if (!selectedFile) {
+		if (!selectedFile?.file) {
 			!preview?.file && setPreview({});
 			return;
 		}
@@ -98,7 +98,7 @@ const VacancyInformation = ({ data, handleEditInformation }) => {
 		<form
 			onSubmit={e => {
 				e.preventDefault();
-				handleSubmit(e, selectedFile.file, createFormData);
+				handleSubmit(e, selectedFile?.file, createFormData);
 			}}
 		>
 			<CardContent>

@@ -1,6 +1,8 @@
 import { TableBody, TableCell, TableRow, Avatar } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 export default function Body({ data, goToSinglePage }) {
+	const { t } = useTranslation();
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const locale = localStorage.getItem('locale');
 

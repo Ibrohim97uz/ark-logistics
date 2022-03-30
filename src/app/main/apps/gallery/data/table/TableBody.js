@@ -1,7 +1,9 @@
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TableBody, TableCell, TableRow, IconButton } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 export default function Body({ data, goToSinglePage, setAlertOpen, setId }) {
+	const { t } = useTranslation();
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const locale = localStorage.getItem('locale');
 
