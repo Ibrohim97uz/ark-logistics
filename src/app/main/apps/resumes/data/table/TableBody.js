@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 export default function Body({ data, setAlertOpen, setId }) {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { t } = useTranslation();
-	const locale = window.localStorage.getItem('locale') || 'en';
+	const locale = window.localStorage.getItem('locale');
+
 	return (
 		<TableBody>
 			{data?.map((resume, n) => {

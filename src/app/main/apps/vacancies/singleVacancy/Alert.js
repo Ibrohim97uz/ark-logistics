@@ -3,27 +3,29 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { useTranslation } from 'react-i18next';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 function Alert({ alertOpen, setAlertOpen, deleteData }) {
+	const { t } = useTranslation();
 	return (
 		<Dialog className="dialog" open={alertOpen} fullWidth maxWidth="sm">
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						Delete Suggession
+						{t('Delete Vacancy')}
 					</Typography>
 				</Toolbar>
 			</AppBar>
 
-			<DialogContent classes={{ root: 'pt-32' }}>Are you sure delete?</DialogContent>
+			<DialogContent classes={{ root: 'pt-32' }}>{t('Are you sure delete?')}</DialogContent>
 
 			<DialogActions className="justify-start px-8 pb-16 pt-16">
 				<div className="pl-16">
 					<Button onClick={() => setAlertOpen(false)} type="submit" variant="contained" color="secondary">
-						Cancel
+						{t('Cancel')}
 					</Button>
 				</div>
 
@@ -37,7 +39,7 @@ function Alert({ alertOpen, setAlertOpen, deleteData }) {
 						color="secondary"
 						style={{ backgroundColor: '#e53e3e', color: '#fff' }}
 					>
-						Yes,delete!
+						{t('Yes,delete!')}
 					</Button>
 				</div>
 			</DialogActions>

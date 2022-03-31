@@ -3,17 +3,19 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { useTranslation } from 'react-i18next';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 function Alert({ alertOpen, setAlertOpen, deleteData }) {
+	const { t } = useTranslation();
 	return (
 		<Dialog className="dialog" open={alertOpen} fullWidth maxWidth="sm">
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						Delete Suggession
+						{t('Delete Certificate')}
 					</Typography>
 				</Toolbar>
 			</AppBar>
